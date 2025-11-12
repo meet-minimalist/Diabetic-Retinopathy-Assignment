@@ -12,7 +12,7 @@ def preproc_dataset(dataset_path, image_height, image_width, is_alexnet=False):
     labels_path = dataset_path + 'train.csv'
     labels_df = pd.read_csv(labels_path) # Replace with the actual path to your labels CSV file
     label_dict = labels_df.set_index('id_code')['diagnosis'].to_dict()
-    for filename in os.listdir(image_dir)[:200]:
+    for filename in os.listdir(image_dir):
         # Extract image ID from filename (assuming filename format is 'image_id.jpg')
         image_id = os.path.splitext(filename)[0]
         if filename.endswith(('.jpg', '.png', '.jpeg')) and image_id in label_dict: # Add more image extensions if needed and check if label exists

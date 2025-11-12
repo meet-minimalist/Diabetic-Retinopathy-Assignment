@@ -44,12 +44,11 @@ def create_alexnet_sequential(image_height, image_width, num_classes=1000, inclu
         layers.Conv2D(384, 3, strides=1, padding='same', activation='relu', groups=2, name='conv4'),
         layers.Conv2D(256, 3, strides=1, padding='same', activation='relu', groups=2, name='conv5'),
         layers.MaxPooling2D(3, strides=2, padding='valid', name='pool5'),
-
-        # Fully Connected Layers
-        layers.Flatten(),
     ])
     
     if include_top:
+        # Fully Connected Layers
+        model.add(layers.Flatten())
         model.add(layers.Dense(4096, activation='relu', name='fc6'))
         model.add(layers.Dense(4096, activation='relu', name='fc7'))
         model.add(layers.Dense(num_classes, activation='softmax', name='fc8'))
@@ -99,13 +98,14 @@ def alexnet_baseline(image_height, image_width, num_classes):
     for layer in base_model_alexnet.layers:
         layer.trainable = False
 
-    # Add a new classification head for 5 classes
-    last_layer = Flatten()(base_model_alexnet.output)
-    last_layer = Dense(512, activation='relu')(last_layer) # Add a Dense layer before the output layer
-    last_layer = Dense(256, activation='relu')(last_layer) # Add a Dense layer before the output layer
-    last_layer = Dense(num_classes, activation='softmax')(last_layer) # Final Dense layer for 5 classes with softmax activation
-
-    # Create the new model
-    model_alexnet = Model(inputs=base_model_alexnet.input, outputs=last_layer)
+    model_alexnet = Sequential([
+        base_model_alexnet,
+        Flatten(),
+        Dense(512, activation='relu'),
+        Dropout(0.2),
+        Dense(256, activation='relu'),
+        Dropout(0.2),
+        Dense(num_classes, activation='softmax'),
+    ])
     
     return model_alexnet
