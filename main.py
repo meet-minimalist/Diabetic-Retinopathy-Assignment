@@ -31,7 +31,7 @@ def train_model(model_name):
                     metrics=['accuracy'])
 
     from dataset_helper import get_image_generator
-    x_train, y_train, x_test, y_test = get_image_generator(is_alexnet=(model_name=="alexnet"))
+    x_train, y_train, x_test, y_test = get_image_generator(model_type=model_name)
 
 
     # Train the VGG model (only the newly added classification head)

@@ -101,10 +101,10 @@ def alexnet_baseline(image_height, image_width, num_classes):
     model_alexnet = Sequential([
         base_model_alexnet,
         Flatten(),
+        Dense(1024, activation='relu'),
+        Dropout(0.3),
         Dense(512, activation='relu'),
-        Dropout(0.2),
-        Dense(256, activation='relu'),
-        Dropout(0.2),
+        Dropout(0.3),
         Dense(num_classes, activation='softmax'),
     ])
     

@@ -4,8 +4,8 @@ from preproc_helper import preproc_dataset
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
-def get_train_test_data(is_alexnet=False):
-    all_images, all_labels = preproc_dataset(dataset_path, image_height, image_width, is_alexnet)
+def get_train_test_data(model_type):
+    all_images, all_labels = preproc_dataset(dataset_path, image_height, image_width, model_type)
 
     # Split the data (e.g., 80% train, 20% test split)
     # random_state is used for reproducibility
@@ -16,8 +16,8 @@ def get_train_test_data(is_alexnet=False):
     return x_train, x_test, y_train, y_test
 
 
-def get_image_generator(is_alexnet=False):
-    x_train, x_test, y_train, y_test = get_train_test_data(is_alexnet)
+def get_image_generator(model_type):
+    x_train, x_test, y_train, y_test = get_train_test_data(model_type)
     
     # Create an ImageDataGenerator with desired augmentation parameters
     datagen = ImageDataGenerator(

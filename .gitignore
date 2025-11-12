@@ -210,3 +210,4 @@ __marimo__/
 aptos2019-blindness-detection
 aptos2019-blindness-detection.zip
 bvlc_alexnet.npy
+*.ipynb
